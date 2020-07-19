@@ -1,0 +1,40 @@
+Option Explicit
+
+Dim dic1 As Object, dic2 As Object
+
+Sub test()
+Dim i%, j%, k%, n%, level%, sArr, rArr(1 To 10) As String, child$, OrgStr$, temp1, temp2, listArr(1 To 1000, 1 To 10) As String
+Set dic1 = CreateObject("Scripting.Dictionary")
+sArr = Sheet1.[a1].CurrentRegion
+n = 0
+For i = 2 To UBound(sArr)
+    dic1(CStr(sArr(i, 1))) = CStr(sArr(i, 3))
+Next
+For i = 2 To UBound(sArr)
+    child = CStr(sArr(i, 1))
+    OrgStr = child & "-" & sArr(i, 2)
+    level = 1
+    Do While child <> "100000"
+        child = dic1(child)
+        OrgStr = child & "-" & OrgStr
+        level = level + 1
+    Loop
+    If rArr(level) = "" Then
+        rArr(level) = OrgStr
+    Else
+        rArr(level) = rArr(level) & "," & OrgStr
+    End If
+Next
+For i = 1 To UBound(rArr)
+    temp1 = Split(rArr(i), ",")
+    For j = 0 To UBound(temp1)
+        n = n + 1
+        temp2 = Split(temp1(j), "-")
+        For k = 0 To UBound(temp2) - 1
+            listArr(n, k + 1) = temp2(k)
+        Next
+        listArr(n, 10) = temp2(k)
+    Next
+Next
+Sheet1.[h1].Resize(n, UBound(listArr, 2)) = listArr
+End Sub
