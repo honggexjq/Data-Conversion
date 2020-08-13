@@ -14,7 +14,7 @@ For i = 2 To UBound(sArr)
     child = CStr(sArr(i, 1))
     OrgStr = child & "-" & sArr(i, 2)
     level = 1
-    Do While child <> "100000"
+    Do While child <> "100100"
         child = dic1(child)
         OrgStr = child & "-" & OrgStr
         level = level + 1
