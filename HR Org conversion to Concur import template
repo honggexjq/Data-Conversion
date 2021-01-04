@@ -8,28 +8,28 @@ Set dic1 = CreateObject("Scripting.Dictionary")
 sArr = Sheet1.[a1].CurrentRegion
 n = 0
 For i = 2 To UBound(sArr)
-    dic1(CStr(sArr(i, 1))) = CStr(sArr(i, 3))
+    dic1(CStr(sArr(i, 1))) = CStr(sArr(i, 4))
 Next
 For i = 2 To UBound(sArr)
     child = CStr(sArr(i, 1))
-    OrgStr = child & "-" & sArr(i, 2)
+    OrgStr = child & "|" & sArr(i, 2)
     level = 1
-    Do While child <> "100100"
+    Do While child <> "100100" ' Replace with Root code
         child = dic1(child)
-        OrgStr = child & "-" & OrgStr
+        OrgStr = child & "|" & OrgStr
         level = level + 1
     Loop
     If rArr(level) = "" Then
         rArr(level) = OrgStr
     Else
-        rArr(level) = rArr(level) & "," & OrgStr
+        rArr(level) = rArr(level) & "$" & OrgStr
     End If
 Next
 For i = 1 To UBound(rArr)
-    temp1 = Split(rArr(i), ",")
+    temp1 = Split(rArr(i), "$")
     For j = 0 To UBound(temp1)
         n = n + 1
-        temp2 = Split(temp1(j), "-")
+        temp2 = Split(temp1(j), "|")
         For k = 0 To UBound(temp2) - 1
             listArr(n, k + 1) = temp2(k)
         Next
